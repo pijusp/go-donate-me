@@ -3,6 +3,8 @@ import { NAVIGATE } from "../types";
 export default function main(state, action) {
     const c = structuredClone(state);
 
+    console.log("REDUCER", action);
+
     switch (action.type) {
         case NAVIGATE:
             c.page = action.payload.to;

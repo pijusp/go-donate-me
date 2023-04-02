@@ -7,7 +7,7 @@ export default function Nav() {
             style={{ backgroundColor: "#f5f5dc" }}
         >
             <div className="container-fluid">
-                <a className="navbar-brand">Go-Donate-ME!</a>
+                <p className="navbar-brand">Go-Donate-ME!</p>
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -32,7 +32,9 @@ export default function Nav() {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link">Pricing</a>
+                            <Link to="categories-list" className="nav-link">
+                                Wishes list
+                            </Link>
                         </li>
                     </ul>
                     <span className="navbar-text">

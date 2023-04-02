@@ -4,13 +4,13 @@ export default function Create() {
             <div className="row justify-content-center">
                 <div className="col-6">
                     <div className="card m-5">
-                        <div className="card-header">Donation</div>
+                        <div className="card-header">What's your wish?</div>
                         <div className="card-body">
                             <div className="mb-3">
-                                <label className="form-label">New wish</label>
+                                <label className="form-label">New story</label>
                                 <input type="text" className="form-control" />
                                 <div id="emailHelp" className="form-text">
-                                    Add a new wish title
+                                    Add a new story title
                                 </div>
                             </div>
                             <button type="button" className="btn btn-primary">

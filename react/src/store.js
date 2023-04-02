@@ -11,7 +11,12 @@ export const Provider = (props) => {
 
     return (
         <Store.Provider
-            value={{ page: store.page, pageTop: store.pageTop, dispatch }}
+            value={{
+                page: store.page,
+                pageTop: store.pageTop,
+                store,
+                dispatch,
+            }}
         >
             {props.children}
         </Store.Provider>

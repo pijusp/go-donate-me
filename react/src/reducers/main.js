@@ -1,4 +1,4 @@
-import { NAVIGATE } from "../types";
+import { NAVIGATE, STORIES_LIST } from "../types";
 
 export default function main(state, action) {
     const c = structuredClone(state);
@@ -19,6 +19,12 @@ export default function main(state, action) {
                     c.pageTop = defaultNav;
             }
             return c;
+        case STORIES_LIST:
+            c.pageTop = "nav";
+            c.page = action.payload.page;
+            c.data = action.payload.data;
+            return c;
+        default:
     }
 
     return state;

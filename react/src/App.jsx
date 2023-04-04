@@ -4,10 +4,10 @@ import { useContext } from "react";
 import { Store } from "./store";
 
 import Nav from "./components/Nav";
-import CategoriesCreate from "./pages/categories/Create";
+import StoriesCreate from "./pages/categories/Create";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
-import CategoriesList from "./pages/categories/List";
+import StoriesList from "./pages/categories/List";
 
 function App() {
     const { page, pageTop } = useContext(Store);
@@ -15,8 +15,8 @@ function App() {
         <>
             {pageTop === "nav" ? <Nav /> : null}
             {page === "home" ? <Home /> : null}
-            {page === "categories-create" ? <CategoriesCreate /> : null}
-            {page === "categories-list" ? <CategoriesList /> : null}
+            {page === "stories-create" ? <StoriesCreate /> : null}
+            {page === "stories-list" ? <StoriesList /> : null}
             {page === "login" ? <Login /> : null}
         </>
     );

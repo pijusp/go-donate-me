@@ -64,7 +64,7 @@ const doAuth = function (req, res, next) {
 
 app.get("/admin/stories", (req, res) => {
     const sql = `
-        SELECT id, title, description, img, date, goal_sum
+        SELECT id, title, description, img, goal_sum
         FROM stories
         ORDER BY title
     `;

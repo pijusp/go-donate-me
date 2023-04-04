@@ -27,13 +27,13 @@ export default function Nav() {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="categories-create" className="nav-link">
+                            <Link to="stories-create" className="nav-link">
                                 Create a goal
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="categories-list" className="nav-link">
-                                Wishes list
+                            <Link show="stories-list" className="nav-link">
+                                Stories list
                             </Link>
                         </li>
                     </ul>

@@ -1,10 +1,11 @@
 import { createContext, useReducer } from "react";
 import main from "./reducers/main";
-import { storiesList } from "./actions";
+import { storiesCreate, storiesList } from "./actions";
 import axios from "axios";
 
 export const actionsList = {
     "stories-list": storiesList,
+    "stories-create": storiesCreate,
 };
 const url = "http://localhost:3003/";
 
@@ -19,19 +20,20 @@ export const Provider = (props) => {
         if (!action.payload || !action.payload.url) {
             dispatch(action);
         } else {
-            axios[action.payload.method](url + action.payload.url).then(
-                (res) => {
-                    console.log(res.data);
-                    action = {
-                        ...action,
-                        payload: {
-                            ...action.payload,
-                            ...res.data,
-                        },
-                    };
-                    dispatch(action);
-                }
-            );
+            const args = [url + action.payload.url];
+            if (action.payload.body) {
+                args.push(action.payload.body);
+            }
+            axios[action.payload.method](...args).then((res) => {
+                action = {
+                    ...action,
+                    payload: {
+                        ...action.payload,
+                        ...res.data,
+                    },
+                };
+                dispatch(action);
+            });
         }
     };
     // const doDispatch = (action) => {

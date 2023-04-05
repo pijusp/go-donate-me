@@ -64,7 +64,7 @@ const doAuth = function (req, res, next) {
 
 app.get("/admin/stories", (req, res) => {
     const sql = `
-        SELECT id, title, description, img, goal_sum
+        SELECT id, title, description, img, start_sum, current_sum, goal_sum
         FROM stories
         ORDER BY title
     `;
@@ -86,17 +86,27 @@ app.get("/admin/sections/:id", (req, res) => {
     });
 });
 
-app.post("/admin/sections", (req, res) => {
+app.post("/admin/stories", (req, res) => {
     const sql = `
-        INSERT INTO sections (title)
-        VALUES (?)
-    `;
-    con.query(sql, [req.body.title], (err) => {
-        if (err) throw err;
-        res.json({
-            msg: { text: "Nauja sritis pridėta", type: "success" },
-        });
-    });
+    INSERT INTO stories (title, description, img, start_sum, current_sum, goal_sum)
+    VALUES (?, ?, ?, 0, 0, ?)
+  `;
+    con.query(
+        sql,
+        [req.body.title, req.body.description, req.body.img, req.body.goal_sum],
+        (err) => {
+            if (err) {
+                console.error(err);
+                res.status(500).json({
+                    msg: { text: "Error adding new story", type: "error" },
+                });
+            } else {
+                res.json({
+                    msg: { text: "New story added", type: "success" },
+                });
+            }
+        }
+    );
 });
 
 app.delete("/admin/sections/:id", (req, res) => {

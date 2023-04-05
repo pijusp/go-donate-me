@@ -32,7 +32,7 @@ export default function Nav() {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link show="stories-list" className="nav-link">
+                            <Link action="stories-list" className="nav-link">
                                 Stories list
                             </Link>
                         </li>

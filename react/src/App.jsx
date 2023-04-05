@@ -8,12 +8,18 @@ import StoriesCreate from "./pages/categories/Create";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import StoriesList from "./pages/categories/List";
+import Messages from "./components/Messages";
 
 function App() {
-    const { page, pageTop } = useContext(Store);
+    const { page, pageTop, messages } = useContext(Store);
     return (
         <>
             {pageTop === "nav" ? <Nav /> : null}
+
+            {messages && messages.length ? (
+                <Messages messages={messages} />
+            ) : null}
+
             {page === "home" ? <Home /> : null}
             {page === "stories-create" ? <StoriesCreate /> : null}
             {page === "stories-list" ? <StoriesList /> : null}

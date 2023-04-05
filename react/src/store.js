@@ -16,6 +16,7 @@ export const Provider = (props) => {
         page: "home",
         pageTop: "nav",
     });
+
     const dataDispatch = (action) => {
         if (!action.payload || !action.payload.url) {
             dispatch(action);
@@ -31,14 +32,15 @@ export const Provider = (props) => {
                         ...action.payload,
                         ...res.data,
                     },
+                    doDispatch,
                 };
                 dispatch(action);
             });
         }
     };
-    // const doDispatch = (action) => {
-    //     dataDispatch(action);
-    // }
+    const doDispatch = (action) => {
+        dataDispatch(action);
+    };
 
     return (
         <Store.Provider
@@ -48,6 +50,7 @@ export const Provider = (props) => {
                 store,
                 dispatch: dataDispatch,
                 actionsList,
+                messages: store.messages,
             }}
         >
             {props.children}

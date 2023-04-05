@@ -4,3 +4,9 @@ body {
 .bg-light {
     background-color: #f5f5dc;
 }
+.messages-bin {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    max-width: 300px;
+}

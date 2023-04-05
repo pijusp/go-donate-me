@@ -1,4 +1,10 @@
-import { NAVIGATE, STORIES_LIST } from "../types";
+import {
+    NAVIGATE,
+    STORIES_LIST,
+    STORIES_CREATE,
+    REMOVE_MESSAGE,
+} from "../types";
+import { v4 as uuidv4 } from "uuid";
 
 export default function main(state, action) {
     const c = structuredClone(state);
@@ -23,6 +29,23 @@ export default function main(state, action) {
             c.pageTop = "nav";
             c.page = action.payload.page;
             c.data = action.payload.data;
+            return c;
+
+        case STORIES_CREATE:
+            const uuid = uuidv4();
+            if (!c.messages) {
+                c.messages = [];
+            }
+            c.messages.push({ ...action.payload.msg, id: uuid });
+
+            setTimeout(() => {
+                action.doDispatch({
+                    type: REMOVE_MESSAGE,
+                    payload: {
+                        uuid,
+                    },
+                });
+            }, 3000);
             return c;
         default:
     }

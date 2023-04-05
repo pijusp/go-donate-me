@@ -23,7 +23,7 @@ export default function Create() {
     return (
         <div className="container-lg">
             <div className="row justify-content-center">
-                <div className="col-6">
+                <div className="col-4">
                     <div className="card m-5">
                         <div className="card-header">What's your wish?</div>
                         <div className="card-body">

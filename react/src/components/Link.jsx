@@ -3,7 +3,7 @@ import { navigate } from "../actions";
 import { Store } from "../store";
 
 export default function Link({ to, children, className, action }) {
-    const { actionsList, dispatch } = useContext(Store);
+    const { actionsList, dispatch, start } = useContext(Store);
 
     const go = (e) => {
         e.preventDefault();
@@ -11,6 +11,7 @@ export default function Link({ to, children, className, action }) {
         if (to) {
             dispatch(navigate(to));
         } else {
+            start();
             dispatch(actionsList[action]());
         }
     };

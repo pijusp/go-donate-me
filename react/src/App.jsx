@@ -10,11 +10,13 @@ import Login from "./pages/auth/Login";
 import StoriesList from "./pages/categories/List";
 import Messages from "./components/Messages";
 import SectionsEdit from "./pages/categories/Edit";
+import Loader from "./components/Loader";
 
 function App() {
-    const { page, pageTop, messages } = useContext(Store);
+    const { page, pageTop, messages, loader } = useContext(Store);
     return (
         <>
+            {loader ? <Loader /> : null}
             {pageTop === "nav" ? <Nav /> : null}
 
             {messages && messages.length ? (

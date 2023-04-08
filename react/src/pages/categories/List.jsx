@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Store, actionsList } from "../../store";
 
 export default function List() {
-    const { store, dispatch } = useContext(Store);
+    const { store, dispatch, start } = useContext(Store);
     return (
         <>
             <div className="card-header">
@@ -79,6 +79,7 @@ export default function List() {
                                                 stories.id
                                             )
                                         );
+                                        start();
                                     }}
                                 >
                                     Edit
@@ -92,6 +93,7 @@ export default function List() {
                                                 stories.id
                                             )
                                         );
+                                        start();
                                     }}
                                 >
                                     Delete

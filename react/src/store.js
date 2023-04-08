@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState } from "react";
 import main from "./reducers/main";
 import {
     storiesCreate,
@@ -21,6 +21,7 @@ const url = "http://localhost:3003/";
 export const Store = createContext();
 
 export const Provider = (props) => {
+    const [loader, setLoader] = useState(false);
     const [store, dispatch] = useReducer(main, {
         page: "home",
         pageTop: "nav",
@@ -29,6 +30,7 @@ export const Provider = (props) => {
     const dataDispatch = (action) => {
         if (!action.payload || !action.payload.url) {
             dispatch(action);
+            setLoader(false);
         } else {
             const args = [url + action.payload.url];
             if (action.payload.body) {
@@ -44,6 +46,7 @@ export const Provider = (props) => {
                     doDispatch,
                 };
                 dispatch(action);
+                setLoader(false);
             });
         }
     };
@@ -60,6 +63,8 @@ export const Provider = (props) => {
                 dispatch: dataDispatch,
                 actionsList,
                 messages: store.messages,
+                loader,
+                start: () => setLoader(true),
             }}
         >
             {props.children}

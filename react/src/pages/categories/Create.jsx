@@ -36,7 +36,9 @@ export default function Create() {
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                 ></input>
-                                <label for="floatingInput">Wish title</label>
+                                <label htmlFor="floatingInput">
+                                    Wish title
+                                </label>
                             </div>
                             <div className="mb-3">
                                 <label
@@ -66,7 +68,7 @@ export default function Create() {
                                         setDonationAmount(e.target.value)
                                     }
                                 ></input>
-                                <label for="floatingInput">Wish goal</label>
+                                <label htmlFor="floatingInput">Wish goal</label>
                             </div>
                             <button
                                 type="button"

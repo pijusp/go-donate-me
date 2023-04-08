@@ -4,6 +4,7 @@ import {
     STORIES_LIST,
     STORIES_DELETE,
     STORIES_SHOW_EDIT,
+    STORIES_EDIT,
 } from "./types";
 
 export const navigate = (to) => {
@@ -54,6 +55,18 @@ export const storiesShowEdit = (id) => {
             url: "admin/stories/" + id,
             method: "get",
             page: "stories-show-edit",
+        },
+    };
+};
+export const storiesEdit = (body, id) => {
+    return {
+        type: STORIES_EDIT,
+        payload: {
+            url: "admin/stories/" + id,
+            method: "put",
+            body,
+            show: "stories-list",
+            pauseShow: 1000,
         },
     };
 };

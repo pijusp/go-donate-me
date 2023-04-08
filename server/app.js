@@ -74,10 +74,10 @@ app.get("/admin/stories", (req, res) => {
     });
 });
 
-app.get("/admin/sections/:id", (req, res) => {
+app.get("/admin/stories/:id", (req, res) => {
     const sql = `
-        SELECT id, title
-        FROM sections
+        SELECT id, title, description, img, start_sum, current_sum, goal_sum
+        FROM stories
         WHERE id = ?
     `;
     con.query(sql, [req.params.id], (err, result) => {
@@ -125,7 +125,27 @@ app.delete("/admin/stories/:id", (req, res) => {
 app.put("/admin/stories/:id", (req, res) => {
     const sql = `
         UPDATE sections
-        SET title = ? 
+        SET title = ?, description = ?, goal_sum = ?  
+        WHERE id = ?
+    `;
+    params = [
+        req.body.title,
+        req.body.description,
+        req.body.goal_sum,
+        req.params.id,
+    ];
+
+    con.query(sql, params, (err) => {
+        if (err) throw err;
+        res.json({
+            msg: { text: "Story has been changed", type: "info" },
+        });
+    });
+});
+app.put("/admin/stories/:id", (req, res) => {
+    const sql = `
+        UPDATE stories
+        SET 
         WHERE id = ?
     `;
     params = [req.body.title, req.params.id];
@@ -133,7 +153,7 @@ app.put("/admin/stories/:id", (req, res) => {
     con.query(sql, params, (err) => {
         if (err) throw err;
         res.json({
-            msg: { text: "Story has been changed", type: "info" },
+            msg: { text: "Sritis pakeista", type: "info" },
         });
     });
 });

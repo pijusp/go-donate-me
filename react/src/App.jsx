@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import StoriesList from "./pages/categories/List";
 import Messages from "./components/Messages";
+import SectionsEdit from "./pages/categories/Edit";
 
 function App() {
     const { page, pageTop, messages } = useContext(Store);
@@ -23,6 +24,7 @@ function App() {
             {page === "home" ? <Home /> : null}
             {page === "stories-create" ? <StoriesCreate /> : null}
             {page === "stories-list" ? <StoriesList /> : null}
+            {page === "stories-show-edit" ? <SectionsEdit /> : null}
             {page === "login" ? <Login /> : null}
         </>
     );

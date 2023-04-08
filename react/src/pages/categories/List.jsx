@@ -14,7 +14,7 @@ export default function List() {
             >
                 {store?.data?.map((stories) => (
                     <div className="col" key={stories.id}>
-                        <div className="card" style={{ width: "18rem" }}>
+                        <div className="card" style={{ width: "30rem" }}>
                             <img
                                 /* {stories.image ? (
                                                 <img
@@ -32,7 +32,7 @@ export default function List() {
                                 alt="tavotevas"
                             ></img>
                             <div className="card-body">
-                                <h5 className="card-title">{stories.title}</h5>
+                                <h4 className="card-title">{stories.title}</h4>
                                 <p className="card-text">
                                     {stories.description}
                                 </p>
@@ -49,6 +49,9 @@ export default function List() {
                                 </li>
                             </ul>
                             <div className="card-body">
+                                <div>
+                                    <h6>Support this story</h6>
+                                </div>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -70,14 +73,13 @@ export default function List() {
                                 <button
                                     type="button"
                                     className="btn btn-info"
-                                    // onClick={(_) => {
-                                    //     dispatch(
-                                    //         actionsList["categories-delete"](
-                                    //             stories.id
-                                    //         )
-                                    //     );
-                                    //     start();
-                                    // }}
+                                    onClick={(_) => {
+                                        dispatch(
+                                            actionsList["stories-show-edit"](
+                                                stories.id
+                                            )
+                                        );
+                                    }}
                                 >
                                     Edit
                                 </button>

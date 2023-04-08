@@ -1,12 +1,20 @@
 import { createContext, useReducer } from "react";
 import main from "./reducers/main";
-import { storiesCreate, storiesList, storiesDelete } from "./actions";
+import {
+    storiesCreate,
+    storiesList,
+    storiesDelete,
+    storiesShowEdit,
+    storiesEdit,
+} from "./actions";
 import axios from "axios";
 
 export const actionsList = {
     "stories-list": storiesList,
     "stories-create": storiesCreate,
     "stories-delete": storiesDelete,
+    "stories-show-edit": storiesShowEdit,
+    "stories-edit": storiesEdit,
 };
 const url = "http://localhost:3003/";
 

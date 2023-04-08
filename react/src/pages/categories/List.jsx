@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Store, actionsList } from "../../store";
 
 export default function List() {
-    const { store, dispatch, start } = useContext(Store);
+    const { store, dispatch, imgUrl } = useContext(Store);
     return (
         <>
             <div className="card-header">
@@ -15,22 +15,14 @@ export default function List() {
                 {store?.data?.map((stories) => (
                     <div className="col" key={stories.id}>
                         <div className="card" style={{ width: "30rem" }}>
-                            <img
-                                // {stories.image ? (
-                                //                 <img
-                                //                     className="list-image"
-                                //                     src={IMG + stories.img}
-                                //                 />
-                                //             ) : (
-                                //                 <img
-                                //                     className="list-image"
-                                //                     src={IMG + "no.gif"}
-                                //                 />
-                                //             )}
-                                src="/bulet.jpg"
-                                className="card-img-top"
-                                alt="tavotevas"
-                            ></img>
+                            <div className="card-body">
+                                {stories.img ? (
+                                    <img
+                                        src={imgUrl + stories.img}
+                                        alt="some view"
+                                    />
+                                ) : null}
+                            </div>
                             <div className="card-body">
                                 <h4 className="card-title">{stories.title}</h4>
                                 <p className="card-text">
@@ -79,7 +71,6 @@ export default function List() {
                                                 stories.id
                                             )
                                         );
-                                        start();
                                     }}
                                 >
                                     Edit
@@ -93,7 +84,6 @@ export default function List() {
                                                 stories.id
                                             )
                                         );
-                                        start();
                                     }}
                                 >
                                     Delete

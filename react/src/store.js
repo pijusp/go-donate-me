@@ -17,6 +17,7 @@ export const actionsList = {
     "stories-edit": storiesEdit,
 };
 const url = "http://localhost:3003/";
+const imgUrl = "http://localhost:3003/img/";
 
 export const Store = createContext();
 
@@ -68,6 +69,7 @@ export const Provider = (props) => {
                 messages: store.messages,
                 loader,
                 start: () => setLoader(true),
+                imgUrl,
             }}
         >
             {props.children}

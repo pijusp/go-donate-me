@@ -9,7 +9,7 @@ export default function List() {
                 <h2>Wishes List</h2>
             </div>
             <div
-                className="row row-cols-1 row-cols-md-2 g-4"
+                className="row row-cols-1 row-cols-xxl-3 row-cols-xl-2 row-cols-lg-1 g-4"
                 style={{ padding: "20px" }}
             >
                 {store?.data?.map((stories) => (
@@ -21,7 +21,12 @@ export default function List() {
                                         src={imgUrl + stories.img}
                                         alt="some view"
                                     />
-                                ) : null}
+                                ) : (
+                                    <img
+                                        src={imgUrl + "noimg.png"}
+                                        alt="some view"
+                                    />
+                                )}
                             </div>
                             <div className="card-body">
                                 <h4 className="card-title">{stories.title}</h4>

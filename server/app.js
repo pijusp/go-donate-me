@@ -60,7 +60,7 @@ const doAuth = function (req, res, next) {
 
 // app.use(doAuth);
 
-//*************** SECTIONS ********************/
+//*************** STORIES ********************/
 
 app.get("/admin/stories", (req, res) => {
     const sql = `
@@ -109,20 +109,20 @@ app.post("/admin/stories", (req, res) => {
     );
 });
 
-app.delete("/admin/sections/:id", (req, res) => {
+app.delete("/admin/stories/:id", (req, res) => {
     const sql = `
-        DELETE FROM sections
+        DELETE FROM stories
         WHERE id = ?
     `;
     con.query(sql, [req.params.id], (err) => {
         if (err) throw err;
         res.json({
-            msg: { text: "Sritis ištrinta", type: "info" },
+            msg: { text: "Story has been deleted", type: "info" },
         });
     });
 });
 
-app.put("/admin/sections/:id", (req, res) => {
+app.put("/admin/stories/:id", (req, res) => {
     const sql = `
         UPDATE sections
         SET title = ? 
@@ -133,7 +133,7 @@ app.put("/admin/sections/:id", (req, res) => {
     con.query(sql, params, (err) => {
         if (err) throw err;
         res.json({
-            msg: { text: "Sritis pakeista", type: "info" },
+            msg: { text: "Story has been changed", type: "info" },
         });
     });
 });

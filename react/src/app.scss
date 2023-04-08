@@ -10,3 +10,12 @@ body {
     right: 50px;
     max-width: 300px;
 }
+.btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    button {
+        display: flex;
+        gap: 10px;
+    }
+}

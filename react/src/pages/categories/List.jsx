@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { Store } from "../../store";
+import { Store, actionsList } from "../../store";
 
 export default function List() {
-    const { store } = useContext(Store);
+    const { store, dispatch } = useContext(Store);
     return (
         <>
             <div className="card-header">
@@ -66,10 +66,10 @@ export default function List() {
                                     Submit
                                 </button>
                             </div>
-                            <div className="card-body">
+                            <div className="card-body btn-container">
                                 <button
                                     type="button"
-                                    className="btn btn-danger"
+                                    className="btn btn-info"
                                     // onClick={(_) => {
                                     //     dispatch(
                                     //         actionsList["categories-delete"](
@@ -78,6 +78,19 @@ export default function List() {
                                     //     );
                                     //     start();
                                     // }}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={(_) => {
+                                        dispatch(
+                                            actionsList["stories-delete"](
+                                                stories.id
+                                            )
+                                        );
+                                    }}
                                 >
                                     Delete
                                 </button>

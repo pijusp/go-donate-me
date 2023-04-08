@@ -3,8 +3,10 @@ import {
     STORIES_LIST,
     STORIES_CREATE,
     REMOVE_MESSAGE,
+    STORIES_DELETE,
 } from "../types";
 import { v4 as uuidv4 } from "uuid";
+import { actionsList } from "../store";
 
 export default function main(state, action) {
     const c = structuredClone(state);
@@ -32,20 +34,36 @@ export default function main(state, action) {
             return c;
 
         case STORIES_CREATE:
-            const uuid = uuidv4();
-            if (!c.messages) {
-                c.messages = [];
-            }
-            c.messages.push({ ...action.payload.msg, id: uuid });
+        case STORIES_DELETE:
+            if (action.payload.msg) {
+                const uuid = uuidv4();
+                if (!c.messages) {
+                    c.messages = [];
+                }
+                c.messages.push({ ...action.payload.msg, id: uuid });
 
-            setTimeout(() => {
-                action.doDispatch({
-                    type: REMOVE_MESSAGE,
-                    payload: {
-                        uuid,
+                setTimeout(() => {
+                    action.doDispatch({
+                        type: REMOVE_MESSAGE,
+                        payload: {
+                            uuid,
+                        },
+                    });
+                }, 3000);
+            }
+            if (action.payload.show) {
+                setTimeout(
+                    () => {
+                        action.doDispatch(actionsList[action.payload.show]());
                     },
-                });
-            }, 3000);
+                    action.payload.hasOwnProperty("pauseShow")
+                        ? action.payload.pauseShow
+                        : 1000
+                );
+            }
+            return c;
+        case REMOVE_MESSAGE:
+            c.messages = c.messages.filter((m) => m.id !== action.payload.uuid);
             return c;
         default:
     }

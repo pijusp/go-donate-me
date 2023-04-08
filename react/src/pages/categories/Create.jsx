@@ -1,6 +1,7 @@
+import "../../styles/stories.scss";
 import { useContext, useState } from "react";
-import { storiesCreate } from "../../actions";
-import { Store } from "../../store";
+import { Store, actionsList } from "../../store";
+import { useFile } from "../../Use/useFile";
 
 export default function Create() {
     const [title, setTitle] = useState("");
@@ -8,9 +9,11 @@ export default function Create() {
     const [donationAmount, setDonationAmount] = useState("");
 
     const { dispatch } = useContext(Store);
+    const [file, readFile, remImage] = useFile();
     const create = (_) => {
         dispatch(
-            storiesCreate({
+            actionsList["stories-create"]({
+                file,
                 title,
                 description,
                 goal_sum: donationAmount,
@@ -19,14 +22,47 @@ export default function Create() {
         setTitle("");
         setDescription("");
         setDonationAmount("");
+        remImage();
     };
     return (
         <div className="container-lg">
             <div className="row justify-content-center">
-                <div className="col-4">
+                <div className="col-8">
                     <div className="card m-5">
                         <div className="card-header">What's your wish?</div>
                         <div className="card-body">
+                            <div className="mb-3">
+                                <label
+                                    htmlFor="formFile"
+                                    className="form-label"
+                                >
+                                    Story image
+                                </label>
+                                <input
+                                    className="form-control form-control-sm"
+                                    id="formFile"
+                                    type="file"
+                                    onChange={readFile}
+                                />
+                                <div className="form-text">
+                                    Will you add an image?
+                                </div>
+                                <button
+                                    className="m-1 btn btn-danger"
+                                    onClick={remImage}
+                                >
+                                    Remove image
+                                </button>
+                            </div>
+                            <div>
+                                {file ? (
+                                    <img
+                                        className="upload-image mb-3"
+                                        src={file}
+                                        alt="to upload"
+                                    />
+                                ) : null}
+                            </div>
                             <div className="form-floating mb-3">
                                 <input
                                     type="text"

@@ -16,17 +16,17 @@ export default function List() {
                     <div className="col" key={stories.id}>
                         <div className="card" style={{ width: "30rem" }}>
                             <img
-                                /* {stories.image ? (
-                                                <img
-                                                    className="list-image"
-                                                    src={IMG + stories.img}
-                                                />
-                                            ) : (
-                                                <img
-                                                    className="list-image"
-                                                    src={IMG + "no.gif"}
-                                                />
-                                            )} */
+                                // {stories.image ? (
+                                //                 <img
+                                //                     className="list-image"
+                                //                     src={IMG + stories.img}
+                                //                 />
+                                //             ) : (
+                                //                 <img
+                                //                     className="list-image"
+                                //                     src={IMG + "no.gif"}
+                                //                 />
+                                //             )}
                                 src="/bulet.jpg"
                                 className="card-img-top"
                                 alt="tavotevas"

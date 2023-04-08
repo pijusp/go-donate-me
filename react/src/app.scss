@@ -9,6 +9,7 @@ body {
     bottom: 50px;
     right: 50px;
     max-width: 300px;
+    z-index: 9991;
 }
 .btn-container {
     width: 100%;
@@ -26,10 +27,10 @@ $prim: #cce5ff;
 .btn-danger {
     color: black;
     background-color: $danger;
-    border-color: darken($danger, 25);
+    border-color: darken($danger, 15);
     &:hover {
         color: black;
-        background-color: lighten($danger, 10);
+        background-color: lighten($danger, 5);
         border-color: $danger;
     }
     &:disabled {
@@ -45,7 +46,7 @@ $prim: #cce5ff;
     border-color: darken($info, 25);
     &:hover {
         color: black;
-        background-color: lighten($info, 10);
+        background-color: lighten($info, 5);
         border-color: $info;
     }
     &:disabled {
@@ -61,7 +62,7 @@ $prim: #cce5ff;
     border-color: darken($prim, 25);
     &:hover {
         color: black;
-        background-color: lighten($prim, 10);
+        background-color: lighten($prim, 5);
         border-color: $prim;
     }
     &:disabled {
@@ -69,4 +70,8 @@ $prim: #cce5ff;
         background-color: lightgrey;
         border-color: darken(lightgrey, 20);
     }
+}
+.card img {
+    width: auto;
+    height: 300px;
 }

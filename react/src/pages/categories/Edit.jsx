@@ -20,7 +20,7 @@ export default function Edit() {
     return (
         <div className="container-lg">
             <div className="row justify-content-center">
-                <div className="col-4">
+                <div className="col-8">
                     <div className="card m-5">
                         <div className="card-header">Edit your story</div>
                         <div className="card-body">

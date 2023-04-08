@@ -59,6 +59,45 @@ const doAuth = function (req, res, next) {
 };
 
 // app.use(doAuth);
+const convertPhoto = (photo) => {
+    let type = "unknown";
+    let file = null;
+
+    if (photo === null) {
+        return [type, file];
+    }
+
+    if (photo.indexOf("data:image/png;base64,") === 0) {
+        type = "png";
+        file = Buffer.from(
+            photo.replace("data:image/png;base64,", ""),
+            "base64"
+        );
+    } else if (photo.indexOf("data:image/jpeg;base64,") === 0) {
+        type = "jpg";
+        file = Buffer.from(
+            photo.replace("data:image/jpeg;base64,", ""),
+            "base64"
+        );
+    } else {
+        file = Buffer.from(photo, "base64");
+    }
+
+    return [type, file];
+};
+
+const createPhoto = (photo) => {
+    const [type, file] = convertPhoto(photo);
+
+    if (file === null) {
+        return null;
+    }
+
+    const fileName = uuidv4() + "." + type;
+    fs.writeFileSync("./public/img/" + fileName, file);
+
+    return fileName;
+};
 
 //*************** STORIES ********************/
 
@@ -93,7 +132,12 @@ app.post("/admin/stories", (req, res) => {
   `;
     con.query(
         sql,
-        [req.body.title, req.body.description, req.body.img, req.body.goal_sum],
+        [
+            req.body.title,
+            req.body.description,
+            createPhoto(req.body.file),
+            req.body.goal_sum,
+        ],
         (err) => {
             if (err) {
                 console.error(err);
@@ -124,7 +168,7 @@ app.delete("/admin/stories/:id", (req, res) => {
 
 app.put("/admin/stories/:id", (req, res) => {
     const sql = `
-        UPDATE sections
+        UPDATE stories
         SET title = ?, description = ?, goal_sum = ?  
         WHERE id = ?
     `;

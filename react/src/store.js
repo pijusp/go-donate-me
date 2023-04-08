@@ -36,6 +36,7 @@ export const Provider = (props) => {
             if (action.payload.body) {
                 args.push(action.payload.body);
             }
+            setLoader(true);
             axios[action.payload.method](...args).then((res) => {
                 action = {
                     ...action,
@@ -46,7 +47,9 @@ export const Provider = (props) => {
                     doDispatch,
                 };
                 dispatch(action);
-                setLoader(false);
+                if (!action.payload.show) {
+                    setLoader(false);
+                }
             });
         }
     };

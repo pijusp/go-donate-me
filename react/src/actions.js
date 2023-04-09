@@ -5,6 +5,7 @@ import {
     STORIES_DELETE,
     STORIES_SHOW_EDIT,
     STORIES_EDIT,
+    STORIES_ADD_DONATION,
 } from "./types";
 
 export const navigate = (to) => {
@@ -61,6 +62,18 @@ export const storiesShowEdit = (id) => {
 export const storiesEdit = (body, id) => {
     return {
         type: STORIES_EDIT,
+        payload: {
+            url: "admin/stories/" + id,
+            method: "put",
+            body,
+            show: "stories-list",
+            pauseShow: 1000,
+        },
+    };
+};
+export const storiesAddDonation = (id, body) => {
+    return {
+        type: STORIES_ADD_DONATION,
         payload: {
             url: "admin/stories/" + id,
             method: "put",

@@ -7,16 +7,24 @@ export default function Edit() {
 
     const [title, setTitle] = useState(store?.data?.title);
     const [description, setDescription] = useState(store?.data?.description);
+    const [currentSum, setCurrentSum] = useState(store?.data?.current_sum);
     const [donationAmount, setDonationAmount] = useState(store?.data?.goal_sum);
 
     const edit = (_) => {
         dispatch(
             actionsList["stories-edit"](
-                { title, description, goal_sum: donationAmount },
+                {
+                    title,
+                    description,
+                    current_sum: currentSum,
+                    goal_sum: donationAmount,
+                    action: "updateStory",
+                },
                 store?.data?.id
             )
         );
     };
+    const isCurrentSumDisabled = currentSum > 0;
     return (
         <div className="container-lg">
             <div className="row justify-content-center">
@@ -53,6 +61,28 @@ export default function Edit() {
                                         setDescription(e.target.value)
                                     }
                                 />
+                            </div>
+                            <div className="form-floating mb-3">
+                                <input
+                                    type="number"
+                                    className="form-control"
+                                    id="floatingInput"
+                                    placeholder="Your required amount..."
+                                    value={currentSum}
+                                    onChange={(e) =>
+                                        setCurrentSum(e.target.value)
+                                    }
+                                    disabled={isCurrentSumDisabled}
+                                ></input>
+                                <label htmlFor="floatingInput">
+                                    Current sum
+                                </label>
+                                {isCurrentSumDisabled && (
+                                    <span className="text-danger">
+                                        Current sum cannot be changed once
+                                        donations are received!
+                                    </span>
+                                )}
                             </div>
                             <div className="form-floating mb-3">
                                 <input

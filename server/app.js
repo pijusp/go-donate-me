@@ -169,30 +169,46 @@ app.delete("/admin/stories/:id", (req, res) => {
 app.put("/admin/stories/:id", (req, res) => {
     const sql = `
         UPDATE stories
-        SET title = ?, description = ?, goal_sum = ?  
+        SET current_sum = current_sum + ?
         WHERE id = ?
     `;
-    params = [
-        req.body.title,
-        req.body.description,
-        req.body.goal_sum,
-        req.params.id,
-    ];
+    params = [req.body.amount, req.params.id];
 
     con.query(sql, params, (err) => {
         if (err) throw err;
         res.json({
-            msg: { text: "Story has been changed", type: "info" },
+            msg: { text: "Sritis pakeista", type: "info" },
         });
     });
 });
 app.put("/admin/stories/:id", (req, res) => {
-    const sql = `
-        UPDATE stories
-        SET 
-        WHERE id = ?
-    `;
-    params = [req.body.title, req.params.id];
+    const action = req.body.action;
+    const id = req.params.id;
+    let sql, params;
+
+    if (action === "updateAmount") {
+        sql = `
+            UPDATE stories
+            SET current_sum = current_sum + ?
+            WHERE id = ?
+        `;
+        params = [req.body.amount, id];
+    } else if (action === "updateStory") {
+        sql = `
+            UPDATE stories
+            SET title = ?, description = ?, current_sum = ?, goal_sum = ?  
+            WHERE id = ?
+        `;
+        params = [
+            req.body.title,
+            req.body.description,
+            req.body.current_sum,
+            req.body.goal_sum,
+            id,
+        ];
+    } else {
+        // Handle invalid action
+    }
 
     con.query(sql, params, (err) => {
         if (err) throw err;

@@ -6,6 +6,7 @@ import {
     storiesDelete,
     storiesShowEdit,
     storiesEdit,
+    storiesAddDonation,
 } from "./actions";
 import axios from "axios";
 
@@ -15,6 +16,7 @@ export const actionsList = {
     "stories-delete": storiesDelete,
     "stories-show-edit": storiesShowEdit,
     "stories-edit": storiesEdit,
+    "stories-add-donation": storiesAddDonation,
 };
 const url = "http://localhost:3003/";
 const imgUrl = "http://localhost:3003/img/";

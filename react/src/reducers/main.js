@@ -6,6 +6,7 @@ import {
     STORIES_DELETE,
     STORIES_SHOW_EDIT,
     STORIES_EDIT,
+    STORIES_ADD_DONATION,
 } from "../types";
 import { v4 as uuidv4 } from "uuid";
 import { actionsList } from "../store";
@@ -39,6 +40,7 @@ export default function main(state, action) {
         case STORIES_CREATE:
         case STORIES_DELETE:
         case STORIES_EDIT:
+        case STORIES_ADD_DONATION:
             if (action.payload.msg) {
                 const uuid = uuidv4();
                 if (!c.messages) {

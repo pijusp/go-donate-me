@@ -72,6 +72,10 @@ $prim: #cce5ff;
     }
 }
 .card img {
-    width: auto;
+    width: 100%;
     height: 300px;
+}
+.auth {
+    display: flex;
+    gap: 10px;
 }

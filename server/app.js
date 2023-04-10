@@ -31,6 +31,15 @@ app.use(
     })
 );
 app.use(express.json());
+app.post("/cookie", (req, res) => {
+    if (req.body.delete) {
+        res.cookie("cookieMonster", "", { maxAge: -3600 });
+    } else {
+        res.cookie("cookieMonster", req.body.text, { maxAge: 3600 });
+    }
+
+    res.json({ msg: "OK" });
+});
 
 const doAuth = function (req, res, next) {
     if (req.url.indexOf("/numbers") === 0) {

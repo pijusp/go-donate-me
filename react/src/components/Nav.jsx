@@ -37,11 +37,18 @@ export default function Nav() {
                             </Link>
                         </li>
                     </ul>
-                    <span className="navbar-text">
-                        <Link to="login" className="nav-link">
-                            Log In
-                        </Link>
-                    </span>
+                    <div className="auth">
+                        <span className="navbar-text">
+                            <Link to="login" className="nav-link">
+                                Log In
+                            </Link>
+                        </span>
+                        <span className="navbar-text">
+                            <Link to="register" className="nav-link">
+                                Register
+                            </Link>
+                        </span>
+                    </div>
                 </div>
             </div>
         </nav>

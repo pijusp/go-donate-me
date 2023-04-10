@@ -7,6 +7,7 @@ import Nav from "./components/Nav";
 import StoriesCreate from "./pages/categories/Create";
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 import StoriesList from "./pages/categories/List";
 import Messages from "./components/Messages";
 import SectionsEdit from "./pages/categories/Edit";
@@ -28,6 +29,7 @@ function App() {
             {page === "stories-list" ? <StoriesList /> : null}
             {page === "stories-show-edit" ? <SectionsEdit /> : null}
             {page === "login" ? <Login /> : null}
+            {page === "register" ? <Register /> : null}
         </>
     );
 }

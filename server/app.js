@@ -165,22 +165,6 @@ app.delete("/admin/stories/:id", (req, res) => {
         });
     });
 });
-
-// app.put("/admin/stories/:id", (req, res) => {
-//     const sql = `
-//         UPDATE stories
-//         SET current_sum = current_sum + ?
-//         WHERE id = ?
-//     `;
-//     params = [req.body.amount, req.params.id];
-
-//     con.query(sql, params, (err) => {
-//         if (err) throw err;
-//         res.json({
-//             msg: { text: "Sritis pakeista", type: "info" },
-//         });
-//     });
-// });
 app.put("/admin/stories/:id", (req, res) => {
     const action = req.body.action;
     const id = req.params.id;

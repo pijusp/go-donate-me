@@ -214,62 +214,103 @@ app.put("/admin/stories/:id", (req, res) => {
 //*************** LOGIN ********************/
 
 app.post("/login", (req, res) => {
-    const sessionId = uuidv4();
+    const users = JSON.parse(fs.readFileSync("./data/users.json", "utf8"));
+    const name = req.body.name;
+    const psw = md5(req.body.psw);
 
-    const sql = `
-        UPDATE users
-        SET session = ?
-        WHERE name = ? AND psw = ?
-    `;
+    const user = users.find((u) => u.name === name && u.psw === psw);
+    if (user) {
+        const sessionId = md5(uuidv4());
+        user.session = sessionId;
 
-    con.query(
-        sql,
-        [sessionId, req.body.name, md5(req.body.psw)],
-        (err, result) => {
-            if (err) throw err;
-            if (result.affectedRows) {
-                res.cookie("treesSession", sessionId);
-                res.json({
-                    status: "ok",
-                    name: req.body.name,
-                });
-            } else {
-                res.json({
-                    status: "error",
-                });
-            }
-        }
-    );
-});
-
-app.post("/logout", (req, res) => {
-    res.cookie("treesSession", "");
-    res.json({
-        status: "logout",
-    });
+        fs.writeFileSync("./data/users.json", JSON.stringify(users), "utf8");
+        res.cookie("magicNumberSession", sessionId);
+        res.json({
+            status: "ok",
+            name: user.name,
+        });
+    } else {
+        res.json({
+            status: "error",
+        });
+    }
 });
 
 app.get("/login", (req, res) => {
-    const sql = `
-        SELECT name
-        FROM users
-        WHERE session = ?
-    `;
-    con.query(sql, [req.cookies.treesSession || ""], (err, result) => {
-        if (err) throw err;
+    const users = JSON.parse(fs.readFileSync("./data/users.json", "utf8"));
+    const user = req.cookies.magicNumberSession
+        ? users.find((u) => u.session === req.cookies.magicNumberSession)
+        : null;
 
-        if (result.length) {
-            res.json({
-                status: "ok",
-                name: result[0].name,
-            });
-        } else {
-            res.json({
-                status: "error",
-            });
-        }
-    });
+    if (user) {
+        res.json({
+            status: "ok",
+            name: user.name,
+        });
+    } else {
+        res.json({
+            status: "error",
+        });
+    }
 });
+
+// app.post("/login", (req, res) => {
+//     const sessionId = uuidv4();
+
+//     const sql = `
+//         UPDATE users
+//         SET session = ?
+//         WHERE name = ? AND psw = ?
+//     `;
+
+//     con.query(
+//         sql,
+//         [sessionId, req.body.name, md5(req.body.psw)],
+//         (err, result) => {
+//             if (err) throw err;
+//             if (result.affectedRows) {
+//                 res.cookie("treesSession", sessionId);
+//                 res.json({
+//                     status: "ok",
+//                     name: req.body.name,
+//                 });
+//             } else {
+//                 res.json({
+//                     status: "error",
+//                 });
+//             }
+//         }
+//     );
+// });
+
+// app.post("/logout", (req, res) => {
+//     res.cookie("treesSession", "");
+//     res.json({
+//         status: "logout",
+//     });
+// });
+
+// app.get("/login", (req, res) => {
+//     const sql = `
+//         SELECT name
+//         FROM users
+//         WHERE session = ?
+//     `;
+//     con.query(sql, [req.cookies.treesSession || ""], (err, result) => {
+//         if (err) throw err;
+
+//         if (result.length) {
+//             res.json({
+//                 status: "ok",
+//                 name: result[0].name,
+//             });
+//         } else {
+//             res.json({
+//                 status: "error",
+//             });
+//         }
+//     });
+// });
 
 app.listen(port, () => {
     console.log(`Server is on port number: ${port}`);

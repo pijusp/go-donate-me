@@ -7,7 +7,7 @@ export default function Link({ to, children, className, action }) {
 
     const go = (e) => {
         e.preventDefault();
-        window.location.hash = to || action;
+        // window.location.hash = to || action;
         if (to) {
             dispatch(navigate(to));
         } else {

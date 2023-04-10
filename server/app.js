@@ -253,7 +253,12 @@ app.get("/login", (req, res) => {
         });
     }
 });
-
+app.post("/logout", (req, res) => {
+    res.cookie("magicNumberSession", "***");
+    res.json({
+        status: "logout",
+    });
+});
 // app.post("/login", (req, res) => {
 //     const sessionId = uuidv4();
 

@@ -80,64 +80,72 @@ export default function List() {
                                     Goal sum: {stories.goal_sum}
                                 </li>
                             </ul>
-                            <div className="card-body">
-                                <div>
-                                    <h6>Support this story</h6>
-                                </div>
+                            {stories.current_sum >= stories.goal_sum ? (
+                                <p className="donation-notification">
+                                    Donation goal has been reached!
+                                </p>
+                            ) : (
+                                <div className="card-body">
+                                    <div>
+                                        <h6>Support this story</h6>
+                                    </div>
 
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter your name.."
-                                    value={inputs[stories.id]?.name || ""}
-                                    onChange={(e) =>
-                                        updateInput(
-                                            stories.id,
-                                            "name",
-                                            e.target.value
-                                        )
-                                    }
-                                    disabled={
-                                        stories.current_sum >= stories.goal_sum
-                                    }
-                                />
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    placeholder="Enter the donation amount.."
-                                    value={inputs[stories.id]?.amount || ""}
-                                    onChange={(e) =>
-                                        updateInput(
-                                            stories.id,
-                                            "amount",
-                                            e.target.value
-                                        )
-                                    }
-                                    disabled={
-                                        stories.current_sum >= stories.goal_sum
-                                    }
-                                />
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                    onClick={() => {
-                                        // pass the card's input state to the action
-                                        dispatch(
-                                            actionsList["stories-add-donation"](
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Enter your name.."
+                                        value={inputs[stories.id]?.name || ""}
+                                        onChange={(e) =>
+                                            updateInput(
                                                 stories.id,
-                                                {
+                                                "name",
+                                                e.target.value
+                                            )
+                                        }
+                                        disabled={
+                                            stories.current_sum >=
+                                            stories.goal_sum
+                                        }
+                                    />
+                                    <input
+                                        type="number"
+                                        className="form-control"
+                                        placeholder="Enter the donation amount.."
+                                        value={inputs[stories.id]?.amount || ""}
+                                        onChange={(e) =>
+                                            updateInput(
+                                                stories.id,
+                                                "amount",
+                                                e.target.value
+                                            )
+                                        }
+                                        disabled={
+                                            stories.current_sum >=
+                                            stories.goal_sum
+                                        }
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary"
+                                        onClick={() => {
+                                            // pass the card's input state to the action
+                                            dispatch(
+                                                actionsList[
+                                                    "stories-add-donation"
+                                                ](stories.id, {
                                                     ...inputs[stories.id],
                                                     action: "updateAmount",
-                                                }
-                                            )
-                                        );
+                                                })
+                                            );
 
-                                        setInputs({});
-                                    }}
-                                >
-                                    Submit
-                                </button>
-                            </div>
+                                            setInputs({});
+                                        }}
+                                    >
+                                        Submit
+                                    </button>
+                                </div>
+                            )}
+
                             <div className="card-body btn-container">
                                 <button
                                     type="button"

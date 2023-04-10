@@ -1,5 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
+import { Global } from "../../components/Global";
+import { Store } from "../../store";
+import { navigate } from "../../actions";
+
+const baseURL = "http://localhost:3003";
 
 function Login() {
     const [userName, setUserName] = useState(null);
@@ -7,24 +12,11 @@ function Login() {
     const [name, setName] = useState("");
     const [psw, setPsw] = useState("");
 
-    useEffect(() => {
-        axios
-            .get("http://localhost:3003/login", { withCredentials: true })
-            .then((res) => {
-                console.log(res.data);
-                if (res.data.status === "ok") {
-                    setUserName(res.data.name);
-                }
-            });
-    }, []);
-
+    const { setLogged, setAuthName } = useContext(Global);
+    const { dispatch } = useContext(Store);
     const login = (_) => {
         axios
-            .post(
-                "http://localhost:3003/login",
-                { name, psw },
-                { withCredentials: true }
-            )
+            .post(`${baseURL}/login`, { name, psw }, { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
                 if (res.data.status === "ok") {
@@ -32,6 +24,9 @@ function Login() {
                     setName("");
                     setPsw("");
                     setError(null);
+                    setLogged(true);
+                    setAuthName(res.data.name);
+                    dispatch(navigate("home"));
                 } else {
                     setError(true);
                     setUserName(null);

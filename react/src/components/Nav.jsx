@@ -1,6 +1,9 @@
 import Link from "./Link";
+import { useContext } from "react";
+import { Global } from "./Global";
 
 export default function Nav() {
+    const { authName, logOut } = useContext(Global);
     return (
         <nav
             className="navbar navbar-expand-lg navbar-light bg-light"
@@ -38,16 +41,33 @@ export default function Nav() {
                         </li>
                     </ul>
                     <div className="auth">
-                        <span className="navbar-text">
-                            <Link to="login" className="nav-link">
-                                Log In
-                            </Link>
-                        </span>
-                        <span className="navbar-text">
-                            <Link to="register" className="nav-link">
-                                Register
-                            </Link>
-                        </span>
+                        {authName ? (
+                            <>
+                                <li className="nav-item">
+                                    <span className="nav-link">
+                                        <b>{authName}</b>
+                                    </span>
+                                </li>
+                                <li className="nav-item">
+                                    <span className="nav-link" onClick={logOut}>
+                                        Logout
+                                    </span>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <span className="navbar-text">
+                                    <Link to="login" className="nav-link">
+                                        Log In
+                                    </Link>
+                                </span>
+                                <span className="navbar-text">
+                                    <Link to="register" className="nav-link">
+                                        Register
+                                    </Link>
+                                </span>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

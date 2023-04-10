@@ -79,3 +79,15 @@ $prim: #cce5ff;
     display: flex;
     gap: 10px;
 }
+.nav-link {
+    cursor: pointer;
+}
+li {
+    list-style-type: none;
+}
+.nav-collapse .li {
+    list-style-type: none;
+}
+.donation-notification {
+    margin: 10px;
+}

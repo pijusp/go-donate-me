@@ -12,11 +12,13 @@ import StoriesList from "./pages/categories/List";
 import Messages from "./components/Messages";
 import SectionsEdit from "./pages/categories/Edit";
 import Loader from "./components/Loader";
+import { GlobalProvider } from "./components/Global";
+import Auth from "./components/Auth";
 
 function App() {
     const { page, pageTop, messages, loader } = useContext(Store);
     return (
-        <>
+        <GlobalProvider>
             {loader ? <Loader /> : null}
             {pageTop === "nav" ? <Nav /> : null}
 
@@ -25,12 +27,16 @@ function App() {
             ) : null}
 
             {page === "home" ? <Home /> : null}
-            {page === "stories-create" ? <StoriesCreate /> : null}
+            {page === "stories-create" ? (
+                <Auth>
+                    <StoriesCreate />
+                </Auth>
+            ) : null}
             {page === "stories-list" ? <StoriesList /> : null}
             {page === "stories-show-edit" ? <SectionsEdit /> : null}
             {page === "login" ? <Login /> : null}
             {page === "register" ? <Register /> : null}
-        </>
+        </GlobalProvider>
     );
 }
 export default App;

@@ -9,18 +9,22 @@ const baseURL = "http://localhost:3003";
 function Login() {
     const [error, setError] = useState(null);
     const [name, setName] = useState("");
-    const [psw, setPsw] = useState("");
+    const [password, setPassword] = useState("");
 
     const { setLogged, setAuthName } = useContext(Global);
     const { dispatch } = useContext(Store);
     const login = (_) => {
         axios
-            .post(`${baseURL}/login`, { name, psw }, { withCredentials: true })
+            .post(
+                `${baseURL}/login`,
+                { name, password },
+                { withCredentials: true }
+            )
             .then((res) => {
                 console.log(res.data);
                 if (res.data.status === "ok") {
                     setName("");
-                    setPsw("");
+                    setPassword("");
                     setError(null);
                     setLogged(true);
                     setAuthName(res.data.name);
@@ -58,8 +62,8 @@ function Login() {
                     <input
                         type="password"
                         className="form-control"
-                        value={psw}
-                        onChange={(e) => setPsw(e.target.value)}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
                 <button className="btn btn-primary m-1" onClick={login}>

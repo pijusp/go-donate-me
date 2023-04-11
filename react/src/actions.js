@@ -6,6 +6,7 @@ import {
     STORIES_SHOW_EDIT,
     STORIES_EDIT,
     STORIES_ADD_DONATION,
+    ADD_NEW_USER,
 } from "./types";
 
 export const navigate = (to) => {
@@ -80,6 +81,17 @@ export const storiesAddDonation = (id, body) => {
             body,
             show: "stories-list",
             pauseShow: 1000,
+        },
+    };
+};
+export const usersCreate = (body) => {
+    return {
+        type: ADD_NEW_USER,
+        payload: {
+            url: "admin/users",
+            method: "post",
+            body,
+            show: "login",
         },
     };
 };

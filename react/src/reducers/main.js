@@ -7,6 +7,7 @@ import {
     STORIES_SHOW_EDIT,
     STORIES_EDIT,
     STORIES_ADD_DONATION,
+    ADD_NEW_USER,
 } from "../types";
 import { v4 as uuidv4 } from "uuid";
 import { actionsList } from "../store";
@@ -32,6 +33,7 @@ export default function main(state, action) {
             return c;
         case STORIES_LIST:
         case STORIES_SHOW_EDIT:
+        case ADD_NEW_USER:
             c.pageTop = "nav";
             c.page = action.payload.page;
             c.data = action.payload.data;

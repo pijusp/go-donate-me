@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import axios from "axios";
-import { Store } from "../../store";
+
+import { Store, actionsList } from "../../store";
 import { navigate } from "../../actions";
 function Register() {
     const [error, setError] = useState(null);
@@ -8,7 +8,6 @@ function Register() {
     const [psw, setPsw] = useState("");
     const [psw2, setPsw2] = useState("");
 
-    // const {setLogged, setAuthName} = useContext(Global);
     const { dispatch } = useContext(Store);
     const register = (_) => {
         if (name.length < 3) {
@@ -23,30 +22,17 @@ function Register() {
             setError("Passwords did not match!");
             return;
         }
-
-        axios
-            .post(
-                "http://localhost:3003/register",
-                { name, psw },
-                { withCredentials: true }
-            )
-            .then((res) => {
-                console.log(res.data);
-                if (res.data.status === "ok") {
-                    setName("");
-                    setPsw("");
-                    setPsw2("");
-                    setError(null);
-                    dispatch(navigate("login"));
-                } else {
-                    setError("Server error");
-                }
+        dispatch(
+            actionsList["add-new-user"]({
+                name,
+                password: psw,
             })
-            .catch((error) => {
-                setError(
-                    error.response ? error.response.statusText : error.code
-                );
-            });
+        );
+        setName("");
+        setPsw("");
+        setPsw2("");
+        setError(null);
+        dispatch(navigate("login"));
     };
 
     return (

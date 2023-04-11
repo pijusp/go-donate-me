@@ -187,108 +187,61 @@ app.put("/admin/stories/:id", (req, res) => {
 //*************** LOGIN ********************/
 
 app.post("/login", (req, res) => {
-    const users = JSON.parse(fs.readFileSync("./data/users.json", "utf8"));
-    const name = req.body.name;
-    const psw = md5(req.body.psw);
+    const sessionId = uuidv4();
 
-    const user = users.find((u) => u.name === name && u.psw === psw);
-    if (user) {
-        const sessionId = md5(uuidv4());
-        user.session = sessionId;
+    const sql = `
+        UPDATE users
+        SET session = ?
+        WHERE name = ? AND password = ?
+    `;
 
-        fs.writeFileSync("./data/users.json", JSON.stringify(users), "utf8");
-        res.cookie("magicNumberSession", sessionId);
-        res.json({
-            status: "ok",
-            name: user.name,
-        });
-    } else {
-        res.json({
-            status: "error",
-        });
-    }
+    con.query(
+        sql,
+        [sessionId, req.body.name, md5(req.body.password)],
+        (err, result) => {
+            if (err) throw err;
+            if (result.affectedRows) {
+                res.cookie("storiesSession", sessionId);
+                res.json({
+                    status: "ok",
+                    name: req.body.name,
+                });
+            } else {
+                res.json({
+                    status: "error",
+                });
+            }
+        }
+    );
 });
-
 app.get("/login", (req, res) => {
-    const users = JSON.parse(fs.readFileSync("./data/users.json", "utf8"));
-    const user = req.cookies.magicNumberSession
-        ? users.find((u) => u.session === req.cookies.magicNumberSession)
-        : null;
+    const sql = `
+        SELECT name
+        FROM users
+        WHERE session = ?
+    `;
+    con.query(sql, [req.cookies.storiesSession || ""], (err, result) => {
+        if (err) throw err;
 
-    if (user) {
-        res.json({
-            status: "ok",
-            name: user.name,
-        });
-    } else {
-        res.json({
-            status: "error",
-        });
-    }
+        if (result.length) {
+            res.json({
+                status: "ok",
+                name: result[0].name,
+            });
+        } else {
+            res.json({
+                status: "error",
+            });
+        }
+    });
 });
 app.post("/logout", (req, res) => {
-    res.cookie("magicNumberSession", "***");
+    res.cookie("storiesSession", "");
     res.json({
         status: "logout",
     });
 });
-// app.post("/login", (req, res) => {
-//     const sessionId = uuidv4();
 
-//     const sql = `
-//         UPDATE users
-//         SET session = ?
-//         WHERE name = ? AND psw = ?
-//     `;
-
-//     con.query(
-//         sql,
-//         [sessionId, req.body.name, md5(req.body.psw)],
-//         (err, result) => {
-//             if (err) throw err;
-//             if (result.affectedRows) {
-//                 res.cookie("treesSession", sessionId);
-//                 res.json({
-//                     status: "ok",
-//                     name: req.body.name,
-//                 });
-//             } else {
-//                 res.json({
-//                     status: "error",
-//                 });
-//             }
-//         }
-//     );
-// });
-
-// app.post("/logout", (req, res) => {
-//     res.cookie("treesSession", "");
-//     res.json({
-//         status: "logout",
-//     });
-// });
-
-// app.get("/login", (req, res) => {
-//     const sql = `
-//         SELECT name
-//         FROM users
-//         WHERE session = ?
-//     `;
-//     con.query(sql, [req.cookies.treesSession || ""], (err, result) => {
-//         if (err) throw err;
-
-//         if (result.length) {
-//             res.json({
-//                 status: "ok",
-//                 name: result[0].name,
-//             });
-//         } else {
-//             res.json({
-//                 status: "error",
-//             });
-//         }
-//     });
-// });
 app.post("/register", (req, res) => {
     let allData = fs.readFileSync("./data/users.json", "utf8");
     allData = JSON.parse(allData);
@@ -307,4 +260,22 @@ app.post("/register", (req, res) => {
 });
 app.listen(port, () => {
     console.log(`Server is on port number: ${port}`);
+});
+app.post("/admin/users", (req, res) => {
+    const sql = `
+    INSERT INTO users (name, password)
+    VALUES (?, ?)
+  `;
+    con.query(sql, [req.body.name, md5(req.body.password)], (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({
+                msg: { text: "Error adding new user", type: "error" },
+            });
+        } else {
+            res.json({
+                msg: { text: "New user added", type: "success" },
+            });
+        }
+    });
 });

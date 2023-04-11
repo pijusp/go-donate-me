@@ -13,3 +13,5 @@ export const STORIES_SHOW_EDIT = 1004; // show stories item edit
 export const STORIES_EDIT = 1005; // edit stories item
 
 export const STORIES_ADD_DONATION = 3001; // Post new donator to db
+
+export const ADD_NEW_USER = 4001;

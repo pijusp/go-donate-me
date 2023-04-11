@@ -10,7 +10,13 @@ export default function Nav() {
             style={{ backgroundColor: "#f5f5dc" }}
         >
             <div className="container-fluid">
-                <p className="navbar-brand">Go-Donate-ME!</p>
+                <div className="navbar-logo">
+                    <img
+                        src="/logo.png"
+                        alt="Go donate me!"
+                        className="logo-photo"
+                    />
+                </div>
                 <button
                     className="navbar-toggler"
                     type="button"

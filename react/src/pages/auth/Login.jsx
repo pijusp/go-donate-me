@@ -7,7 +7,6 @@ import { navigate } from "../../actions";
 const baseURL = "http://localhost:3003";
 
 function Login() {
-    const [userName, setUserName] = useState(null);
     const [error, setError] = useState(null);
     const [name, setName] = useState("");
     const [psw, setPsw] = useState("");
@@ -20,7 +19,6 @@ function Login() {
             .then((res) => {
                 console.log(res.data);
                 if (res.data.status === "ok") {
-                    setUserName(res.data.name);
                     setName("");
                     setPsw("");
                     setError(null);
@@ -29,7 +27,6 @@ function Login() {
                     dispatch(navigate("home"));
                 } else {
                     setError(true);
-                    setUserName(null);
                 }
             });
     };
@@ -45,11 +42,7 @@ function Login() {
             </div>
             <div className="card-body">
                 <h5 className="card-title">
-                    {userName ? (
-                        <span>Hello, {userName}</span>
-                    ) : (
-                        <span>Hello, guest</span>
-                    )}
+                    <span>Hello, guest</span>
                 </h5>
                 <div className="mb-3">
                     <label className="form-label">Name</label>

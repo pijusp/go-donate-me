@@ -20,7 +20,7 @@ function Auth({ children }) {
                     setAuthName(null);
                 }
             });
-    }, []);
+    }, [setLogged, setAuthName]);
 
     if (null === logged) {
         return <Loader />;

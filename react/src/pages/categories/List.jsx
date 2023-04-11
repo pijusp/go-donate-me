@@ -40,8 +40,8 @@ export default function List() {
     const sortedStories = sortStories(store?.data || []);
     return (
         <>
-            <div className="card-header">
-                <h2>Wishes List</h2>
+            <div className="card-header" style={{ textAlign: "center" }}>
+                <h2>Stories List</h2>
             </div>
             <div
                 className="row row-cols-1 row-cols-xxl-3 row-cols-xl-2 row-cols-lg-1 g-4"

@@ -41,33 +41,6 @@ app.post("/cookie", (req, res) => {
     res.json({ msg: "OK" });
 });
 
-const doAuth = function (req, res, next) {
-    if (req.url.indexOf("/numbers") === 0) {
-        const users = JSON.parse(fs.readFileSync("./data/users.json", "utf8"));
-        const user = req.cookies.magicNumberSession
-            ? users.find((u) => u.session === req.cookies.magicNumberSession)
-            : null;
-        if (user && (user.role === "admin" || user.role === "manager")) {
-            next();
-        } else {
-            res.status(401).json({});
-        }
-    } else if (req.url.indexOf("/users") === 0) {
-        const users = JSON.parse(fs.readFileSync("./data/users.json", "utf8"));
-        const user = req.cookies.magicNumberSession
-            ? users.find((u) => u.session === req.cookies.magicNumberSession)
-            : null;
-        if (user && user.role === "admin") {
-            next();
-        } else {
-            res.status(401).json({});
-        }
-    } else {
-        next();
-    }
-};
-
-// app.use(doAuth);
 const convertPhoto = (photo) => {
     let type = "unknown";
     let file = null;
@@ -206,7 +179,7 @@ app.put("/admin/stories/:id", (req, res) => {
     con.query(sql, params, (err) => {
         if (err) throw err;
         res.json({
-            msg: { text: "Sritis pakeista", type: "info" },
+            msg: { text: "Story has been updated!", type: "info" },
         });
     });
 });
@@ -316,7 +289,22 @@ app.post("/logout", (req, res) => {
 //         }
 //     });
 // });
-
+app.post("/register", (req, res) => {
+    let allData = fs.readFileSync("./data/users.json", "utf8");
+    allData = JSON.parse(allData);
+    const id = uuidv4();
+    const data = {
+        name: req.body.name,
+        psw: md5(req.body.psw),
+        id,
+    };
+    allData.push(data);
+    allData = JSON.stringify(allData);
+    fs.writeFileSync("./data/users.json", allData, "utf8");
+    res.json({
+        status: "ok",
+    });
+});
 app.listen(port, () => {
     console.log(`Server is on port number: ${port}`);
 });
